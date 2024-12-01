@@ -1,8 +1,8 @@
-import Dacounter from './DateCounter';
+import Header from './Header';
 function App(){
   return(
-    <div>
-      <Dacounter/>
+    <div className='app'>
+<Header/>
     </div>
   )
 }
