@@ -3,9 +3,9 @@ import Mainn from "./Mainn";
 import Loder from "./Loader";
 import Error from "./Error";
 import StartQuize from "./startQuize";
+import Question from "./Question";
 import { useReducer } from "react";
 import { useEffect } from "react";
-
 const initialstate = {
   questions: [],
   status: "loading",
@@ -22,6 +22,11 @@ function reducer(state, action) {
         return{
           ...state,
           status:'error',
+        }
+        case"start":
+        return{
+        ...state, 
+        status: "active",
         }
     default:
       throw new Error("Action unknown");
@@ -42,7 +47,9 @@ const numQuestion = questions.length;
       <Mainn>
         {status=='loading'&&<Loder/>}
         {status=='error'&&<Error/>}
-        {status=='ready'&&<StartQuize numQuestion={numQuestion}/>}
+        {status=='ready'&&<StartQuize numQuestion={numQuestion} dispatch={dispatch}/>}
+        {status=='active'&&<Question/>}
+
       </Mainn>
     </div>
   );
