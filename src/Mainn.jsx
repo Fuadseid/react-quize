@@ -1,14 +1,5 @@
-
-
-function Mainn() {
-
-  return (
-    <div className="main">
-      <h3>Main point</h3>
-
-      <p>Here is the main part</p>
-    </div>
-  );
+function Mainn({ children }) {
+  return <div className="main">{children}</div>;
 }
 
 export default Mainn;
