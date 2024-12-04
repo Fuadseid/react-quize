@@ -4,6 +4,7 @@ import Loder from "./Loader";
 import Error from "./Error";
 import StartQuize from "./startQuize";
 import Question from "./Question";
+import NextQuestion from './NextQuestion'
 import { useReducer } from "react";
 import { useEffect } from "react";
 const initialstate = {
@@ -39,6 +40,10 @@ function reducer(state, action) {
             answer:action.payload,
             points:action.payload===question.correctOption?state.points+question.points:state.points
           }
+         case "nextQUestion":
+            return {
+              ...state, index: state.index+1, answer:null
+            } 
 
     default:
       throw new Error("Action unknown");
@@ -61,6 +66,7 @@ const numQuestion = questions.length;
         {status=='error'&&<Error/>}
         {status=='ready'&&<StartQuize numQuestion={numQuestion} dispatch={dispatch}/>}
         {status=='active'&&<Question question={questions[index]} dispatch={dispatch} answer={answer}/>}
+        <NextQuestion dispatch={dispatch} answer={answer}/>
 
       </Mainn>
     </div>
