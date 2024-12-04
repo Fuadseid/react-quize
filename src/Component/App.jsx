@@ -9,6 +9,9 @@ import { useEffect } from "react";
 const initialstate = {
   questions: [],
   status: "loading",
+  index:0,
+  answer:null,
+  points:0,
 };
 function reducer(state, action) {
   switch (action.type) {
@@ -28,12 +31,21 @@ function reducer(state, action) {
         ...state, 
         status: "active",
         }
+        case "newAnswer":
+          const question = state.questions.at(state.index)
+
+          return{
+            ...state,
+            answer:action.payload,
+            points:action.payload===question.correctOption?state.points+question.points:state.points
+          }
+
     default:
       throw new Error("Action unknown");
   }
 }
 function App() {
-  const [{ questions, status }, dispatch] = useReducer(reducer, initialstate);
+  const [{ questions, status,index,answer }, dispatch] = useReducer(reducer, initialstate);
 const numQuestion = questions.length;
   useEffect(function () {
     fetch("http://localhost:8000/questions")
@@ -48,7 +60,7 @@ const numQuestion = questions.length;
         {status=='loading'&&<Loder/>}
         {status=='error'&&<Error/>}
         {status=='ready'&&<StartQuize numQuestion={numQuestion} dispatch={dispatch}/>}
-        {status=='active'&&<Question/>}
+        {status=='active'&&<Question question={questions[index]} dispatch={dispatch} answer={answer}/>}
 
       </Mainn>
     </div>
