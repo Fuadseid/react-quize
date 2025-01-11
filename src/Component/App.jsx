@@ -34,7 +34,7 @@ function reducer(state, action) {
         status: "active",
       };
     case "newAnswer":
-      const question = state.questions.at(state.index);
+     { const question = state.questions.at(state.index);
 
       return {
         ...state,
@@ -43,7 +43,7 @@ function reducer(state, action) {
           action.payload === question.correctOption
             ? state.points + question.points
             : state.points,
-      };
+      }};
     case "nextQUestion":
       return {
         ...state,
@@ -66,7 +66,7 @@ function App() {
     fetch("http://localhost:8000/questions")
       .then((res) => res.json())
       .then((data) => dispatch({ type: "displayData", payload: data }))
-      .catch((err) => dispatch({ type: "datafailed" }));
+      .catch((err) => dispatch({ type: "datafailed",err }));
   }, []);
   return (
     <div className="app">
